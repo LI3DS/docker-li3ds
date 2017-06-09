@@ -24,6 +24,6 @@ You can start a container like this:
 
 The API will then be accessible at [http://localhost:5003](http://localhost:5003)
 
-**mm2li** command line can be invoked with:
+**li3ds** command line can be invoked with:
 
     docker exec -it docker-li3ds li3ds
