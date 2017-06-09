@@ -105,6 +105,5 @@ EXPOSE 5000
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# VOLUME ["${GITLAB_DATA_DIR}", "${GITLAB_LOG_DIR}"]
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
