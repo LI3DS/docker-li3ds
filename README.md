@@ -1,5 +1,8 @@
 # docker-li3ds
 
+[![Docker Automated buil](https://img.shields.io/docker/automated/oslandia/docker-li3ds.svg)]()
+[![Docker Pulls](https://img.shields.io/docker/pulls/oslandia/docker-li3ds.svg)]()
+
 Docker container for the LI³DS datastore
 
 This docker image contain all projects involved in the LI³DS project that can be found in the [LI³DS organization](https://github.com/LI3DS/)
