@@ -44,9 +44,9 @@ RUN apt-get install -y --no-install-recommends \
 RUN git clone https://github.com/pgpointcloud/pointcloud.git
 RUN cd pointcloud && ./autogen.sh && ./configure && make -j3 && make install
 
-# Install pg_li3ds
-RUN git clone https://github.com/li3ds/pg_li3ds
-RUN cd pg_li3ds && make install
+# Install pg-li3ds
+RUN git clone https://github.com/li3ds/pg-li3ds
+RUN cd pg-li3ds && make install
 
 # Install fdw-li3ds
 RUN git clone https://github.com/Kozea/Multicorn && \
@@ -57,6 +57,7 @@ RUN git clone https://github.com/Kozea/Multicorn && \
     git clone https://github.com/LI3DS/fdw-li3ds && \
     cd fdw-li3ds && \
     pip2 install -e .
+
 
 # Install micmac_li3ds
 RUN git clone https://github.com/li3ds/cli-li3ds.git
