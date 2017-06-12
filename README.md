@@ -1,7 +1,7 @@
 # docker-li3ds
 
-[![Docker Automated buil](https://img.shields.io/docker/automated/oslandia/docker-li3ds.svg)]()
-[![Docker Pulls](https://img.shields.io/docker/pulls/oslandia/docker-li3ds.svg)]()
+[![Docker Automated buil](https://img.shields.io/docker/automated/li3ds/li3ds.svg)]()
+[![Docker Pulls](https://img.shields.io/docker/pulls/li3ds/li3ds.svg)]()
 
 Docker container for the LI³DS datastore
 
