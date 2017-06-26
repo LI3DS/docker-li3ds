@@ -63,7 +63,7 @@ RUN git clone https://github.com/Kozea/Multicorn && \
     pip2 install -e .
 
 
-# Install micmac_li3ds
+# Install cli-li3ds
 RUN git clone https://github.com/li3ds/cli-li3ds.git
 RUN cd cli-li3ds && pip3 install -e .
 
