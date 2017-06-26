@@ -93,7 +93,6 @@ RUN cd api-li3ds && pip3 install -e .
 # Install conf for api-li3ds
 ADD conf/api_li3ds.yml api-li3ds/conf/
 
-
 ENV HOME /scripts
 WORKDIR /scripts
 
