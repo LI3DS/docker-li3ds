@@ -29,6 +29,10 @@ RUN apt-get install -y --no-install-recommends \
         python3-setuptools \
         python3-numpy \
         python-rosbag \
+        python-genmsg \
+        python-genpy \
+        python-rosgraph \
+        python-rosgraph-msgs \
         git \
         make \
         build-essential \
