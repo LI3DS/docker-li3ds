@@ -65,6 +65,7 @@ RUN git clone https://github.com/Kozea/Multicorn && \
 # Install fdw-rosbag
 RUN git clone https://github.com/LI3DS/fdw-rosbag && \
     cd fdw-rosbag && \
+    git checkout pcpoint && \
     pip2 install -e .
 
 # Install cli-li3ds
