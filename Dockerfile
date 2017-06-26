@@ -29,6 +29,10 @@ RUN apt-get install -y --no-install-recommends \
         python3-setuptools \
         python3-numpy \
         python-rosbag \
+        python-genmsg \
+        python-genpy \
+        python-rosgraph \
+        python-rosgraph-msgs \
         git \
         make \
         build-essential \
@@ -42,7 +46,7 @@ RUN apt-get install -y --no-install-recommends \
 
 # Install pg_pointcloud
 RUN git clone https://github.com/LI3DS/pointcloud.git
-RUN cd pointcloud && ./autogen.sh && ./configure && make -j3 && make install
+RUN cd pointcloud && git checkout no_xy_check && ./autogen.sh && ./configure && make -j3 && make install
 
 # Install pg-li3ds
 RUN git clone https://github.com/li3ds/pg-li3ds
@@ -58,8 +62,12 @@ RUN git clone https://github.com/Kozea/Multicorn && \
     cd fdw-li3ds && \
     pip2 install -e .
 
+# Install fdw-rosbag
+RUN git clone https://github.com/LI3DS/fdw-rosbag && \
+    cd fdw-rosbag && \
+    pip2 install -e .
 
-# Install micmac_li3ds
+# Install cli-li3ds
 RUN git clone https://github.com/li3ds/cli-li3ds.git
 RUN cd cli-li3ds && pip3 install -e .
 
