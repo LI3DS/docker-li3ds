@@ -77,8 +77,6 @@ RUN /etc/init.d/postgresql start && \
   psql -d li3ds --command "create extension pointcloud_postgis" && \
   psql -d li3ds --command "create extension li3ds" && \
   psql -d li3ds --command "create extension multicorn" && \
-  psql -d li3ds --command "create server echopulse foreign data wrapper multicorn options ( wrapper 'fdwli3ds.EchoPulse' )" && \
-  psql -d li3ds --command "create server sbet foreign data wrapper multicorn options ( wrapper 'fdwli3ds.Sbet' )" && \
   /etc/init.d/postgresql stop
 USER root
 
