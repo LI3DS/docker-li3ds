@@ -46,7 +46,7 @@ RUN apt-get install -y --no-install-recommends \
 
 # Install pg_pointcloud
 RUN git clone https://github.com/LI3DS/pointcloud.git
-RUN cd pointcloud && git checkout no_xy_check && ./autogen.sh && ./configure && make -j3 && make install
+RUN cd pointcloud && ./autogen.sh && ./configure && make -j3 && make install
 
 # Install pg-li3ds
 RUN git clone https://github.com/li3ds/pg-li3ds
