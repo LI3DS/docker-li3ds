@@ -10,7 +10,7 @@ RUN apt-get install -y \
   postgresql-server-dev-9.5 \
   postgis \
   postgresql-9.5-postgis-2.2 \
-  postgresql-plpython3-9.5
+  postgresql-plpython-9.5
 
 RUN echo "host   all  all  0.0.0.0/0 md5" >> /etc/postgresql/9.5/main/pg_hba.conf
 RUN echo "local  all  all            md5" >> /etc/postgresql/9.5/main/pg_hba.conf
@@ -68,7 +68,7 @@ USER postgres
 RUN /etc/init.d/postgresql start && \
   psql --command "CREATE USER li3ds WITH SUPERUSER PASSWORD 'li3ds'" && \
   createdb -O li3ds li3ds && \
-  psql -d li3ds --command "create extension plpython3u" && \
+  psql -d li3ds --command "create extension plpython2u" && \
   psql -d li3ds --command "create extension postgis" && \
   psql -d li3ds --command "create extension pointcloud" && \
   psql -d li3ds --command "create extension pointcloud_postgis" && \
