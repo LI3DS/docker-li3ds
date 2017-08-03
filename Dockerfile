@@ -41,6 +41,8 @@ RUN apt-get install -y --no-install-recommends \
         libxml2-dev \
         graphviz \
         zlib1g-dev \
+        libpcre3 \
+        libpcre3-dev \
     && pip install --upgrade pip \
     && pip3 install --upgrade pip
 
@@ -82,9 +84,10 @@ USER root
 
 # Install api-li3ds
 RUN git clone https://github.com/li3ds/api-li3ds.git
-RUN cd api-li3ds && pip3 install -e .
+RUN cd api-li3ds && pip3 install -e . && pip3 install uwsgi
+
 # Install conf for api-li3ds
-ADD conf/api_li3ds.yml api-li3ds/conf/
+ADD conf/api_li3ds.yml conf/api_li3ds.uwsgi.yml api-li3ds/conf/
 
 ENV HOME /scripts
 WORKDIR /scripts
