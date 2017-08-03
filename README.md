@@ -19,7 +19,7 @@ This docker image contain all projects involved in the LI³DS project that can b
 
 You can start a container like this:
 
-    docker run --rm -p 5003:5000 -e API_KEY=b05765cf-4a36-413b-ae70-e43e0e3c7595 -it docker-li3ds
+    docker run --rm -p 5003:5000 -e API_KEY=b05765cf-4a36-413b-ae70-e43e0e3c7595 -e CPU_COUNT=4 -it docker-li3ds
 
 The API will then be accessible locally at [http://localhost:5003](http://localhost:5003)
 
@@ -29,7 +29,7 @@ The API will then be accessible locally at [http://localhost:5003](http://localh
 
 It's also usefull to bind your data repository into the container: 
 
-    docker run --rm -p 5003:5000 -e API_KEY=b05765cf-4a36-413b-ae70-e43e0e3c7595 -v /home/data/:/data -it docker-li3ds
+    docker run --rm -p 5003:5000 -e API_KEY=b05765cf-4a36-413b-ae70-e43e0e3c7595 -e CPU_COUNT=4 -v /home/data/:/data -it docker-li3ds
 
 Then, here is an example using the li3ds CLI to import an autocal xml which is on your host: 
 

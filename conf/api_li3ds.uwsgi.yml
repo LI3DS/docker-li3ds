@@ -2,7 +2,8 @@ uwsgi:
     master: true
     socket: :5000
     module: api_li3ds.wsgi:app
-    processes: 1
+    processes: {CPU_COUNT}
+    lazy-apps: true
     enable-threads: true
     protocol: http
     need-app: true
