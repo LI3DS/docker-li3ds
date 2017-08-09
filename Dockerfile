@@ -4,46 +4,45 @@ FROM phusion/baseimage:0.9.22
 # declare a default value for the LI3DS API key
 ENV API_KEY 4c822795-c507-439a-9ea4-525237045427
 
-# Install postgresql
-RUN apt-get update -y
-RUN apt-get install -y \
-  postgresql-server-dev-9.5 \
-  postgis \
-  postgresql-9.5-postgis-2.2 \
-  postgresql-plpython-9.5
+# Install system packages
+RUN apt-get update -y \
+  && apt-get install -y --no-install-recommends \
+    postgresql-server-dev-9.5 \
+    postgis \
+    postgresql-9.5-postgis-2.2 \
+    postgresql-plpython-9.5 \
+    python2.7 \
+    python2.7-dev \
+    python-pip \
+    python-setuptools \
+    python-numpy \
+    python3.5 \
+    python3.5-dev \
+    python3-pip \
+    python3-setuptools \
+    python3-numpy \
+    python-rosbag \
+    python-genmsg \
+    python-genpy \
+    python-rosgraph \
+    python-rosgraph-msgs \
+    git \
+    make \
+    build-essential \
+    autoconf \
+    automake \
+    libxml2-dev \
+    graphviz \
+    zlib1g-dev \
+    libpcre3 \
+    libpcre3-dev
 
 RUN echo "host   all  all  0.0.0.0/0 md5" >> /etc/postgresql/9.5/main/pg_hba.conf
 RUN echo "local  all  all            md5" >> /etc/postgresql/9.5/main/pg_hba.conf
 RUN echo "listen_addresses='*'"           >> /etc/postgresql/9.5/main/postgresql.conf
 
-# Install Python 2.7 and Python 3.5
-RUN apt-get install -y --no-install-recommends \
-        python2.7 \
-        python2.7-dev \
-        python-pip \
-        python-setuptools \
-        python-numpy \
-        python3.5 \
-        python3.5-dev \
-        python3-pip \
-        python3-setuptools \
-        python3-numpy \
-        python-rosbag \
-        python-genmsg \
-        python-genpy \
-        python-rosgraph \
-        python-rosgraph-msgs \
-        git \
-        make \
-        build-essential \
-        autoconf \
-        automake \
-        libxml2-dev \
-        graphviz \
-        zlib1g-dev \
-        libpcre3 \
-        libpcre3-dev \
-    && pip install --upgrade pip \
+# Upgrade PIP for py2 and py3
+RUN pip install --upgrade pip \
     && pip3 install --upgrade pip
 
 # Install pg_pointcloud
