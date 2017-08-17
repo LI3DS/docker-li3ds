@@ -51,7 +51,7 @@ RUN cd pointcloud && ./autogen.sh && ./configure && make -j3 && make install
 
 # Install pg-li3ds
 RUN git clone https://github.com/li3ds/pg-li3ds
-RUN cd pg-li3ds && make install
+RUN cd pg-li3ds && make install PIP_COMMAND=pip2
 
 # Install fdw-li3ds
 RUN git clone https://github.com/Kozea/Multicorn && \
