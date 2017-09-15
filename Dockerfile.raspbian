@@ -1,0 +1,104 @@
+FROM resin/rpi-raspbian:stretch
+
+# declare a default value for the LI3DS API key
+ENV API_KEY 4c822795-c507-439a-9ea4-525237045427
+
+# Install system packages
+RUN apt-get update -y \
+  && apt-get install -y --no-install-recommends \
+    postgresql-server-dev-9.6 \
+    postgis \
+    postgresql-9.6-postgis-2.3 \
+    postgresql-plpython-9.6 \
+    python2.7 \
+    python2.7-dev \
+    python-pip \
+    python-setuptools \
+    python-numpy \
+    python3.5 \
+    python3.5-dev \
+    python3-pip \
+    python3-setuptools \
+    python3-numpy \
+    python-rosbag \
+    python-genmsg \
+    python-genpy \
+    python-rosgraph \
+    python-rosgraph-msgs \
+    git \
+    make \
+    build-essential \
+    autoconf \
+    automake \
+    libxml2-dev \
+    graphviz \
+    zlib1g-dev \
+    libpcre3 \
+    libpcre3-dev
+
+RUN echo "host   all  all  0.0.0.0/0 md5" >> /etc/postgresql/9.6/main/pg_hba.conf
+RUN echo "local  all  all            md5" >> /etc/postgresql/9.6/main/pg_hba.conf
+RUN echo "listen_addresses='*'"           >> /etc/postgresql/9.6/main/postgresql.conf
+
+# Upgrade PIP for py2 and py3
+RUN pip install --upgrade pip \
+    && pip3 install --upgrade pip
+
+# Install pg_pointcloud
+RUN git clone https://github.com/LI3DS/pointcloud.git
+RUN cd pointcloud && ./autogen.sh && ./configure && make -j3 && make install
+
+# Install pg-li3ds
+RUN git clone https://github.com/li3ds/pg-li3ds
+RUN cd pg-li3ds && make install PIP_COMMAND=pip2
+
+# Install fdw-li3ds
+RUN git clone https://github.com/Kozea/Multicorn && \
+    cd Multicorn && \
+    PYTHON_OVERRIDE=python2 make -j3 && \
+    PYTHON_OVERRIDE=python2 make install && \
+    cd .. && \
+    git clone https://github.com/LI3DS/fdw-li3ds && \
+    cd fdw-li3ds && \
+    pip2 install -e .
+
+# Install cli-li3ds
+RUN git clone https://github.com/li3ds/cli-li3ds.git
+RUN cd cli-li3ds && pip3 install -e .
+
+
+RUN apt-get update -y \
+  && apt-get install -y --no-install-recommends \
+    postgresql-9.6-postgis-scripts
+
+# Create li3ds user and database
+USER postgres
+RUN /etc/init.d/postgresql start && \
+  psql --command "CREATE USER li3ds WITH SUPERUSER PASSWORD 'li3ds'" && \
+  createdb -O li3ds li3ds && \
+  psql -d li3ds --command "create extension plpython2u" && \
+  psql -d li3ds --command "create extension postgis" && \
+  psql -d li3ds --command "create extension pointcloud" && \
+  psql -d li3ds --command "create extension pointcloud_postgis" && \
+  psql -d li3ds --command "create extension li3ds" && \
+  psql -d li3ds --command "create extension multicorn" && \
+  /etc/init.d/postgresql stop
+USER root
+
+# Install api-li3ds
+RUN git clone https://github.com/li3ds/api-li3ds.git
+RUN cd api-li3ds && pip3 install -e . && pip3 install uwsgi
+
+# Install conf for api-li3ds
+ADD conf/api_li3ds.yml conf/api_li3ds.uwsgi.yml api-li3ds/conf/
+
+COPY start_api.sh start_li3ds.sh /usr/local/bin/
+
+# Expose postgres and api ports
+EXPOSE 5432
+EXPOSE 5000
+
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+CMD ["start_li3ds.sh"]
